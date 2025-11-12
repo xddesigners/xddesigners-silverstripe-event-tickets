@@ -1,0 +1,23 @@
+---
+Name: event-tickets
+---
+#XD\Events\Model\EventPage:
+#  extensions:
+#    - 'XD\EventTickets\TicketExtension'
+#XD\Events\Model\EventPageController:
+#  extensions:
+#    - 'XD\EventTickets\TicketControllerExtension'
+#    - 'XD\EventTickets\RegisterStep'
+#    - 'XD\EventTickets\SummaryStep'
+#    - 'XD\EventTickets\SuccessStep'
+XD\EventTickets\Checkout\Steps\CheckoutSteps:
+  checkout_steps:
+    - register
+    - summary
+    - success
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - XD\EventTickets\Extensions\SiteConfigExtension
+SilverStripe\Omnipay\Model\Payment:
+  extensions:
+    - XD\EventTickets\Extensions\TicketPayment

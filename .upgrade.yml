@@ -1,0 +1,10 @@
+mappings:
+  Broarm\EventTickets\App\Model\Attendee: XD\EventTickets\App\Model\Attendee
+  Broarm\EventTickets\App\Model\Buyable: XD\EventTickets\App\Model\Buyable
+  Broarm\EventTickets\App\Model\CheckInValidatorResult: XD\EventTickets\App\Model\CheckInValidatorResult
+  Broarm\EventTickets\App\Model\OrderItem: XD\EventTickets\App\Model\OrderItem
+  Broarm\EventTickets\App\Model\PriceModifier: XD\EventTickets\App\Model\PriceModifier
+  Broarm\EventTickets\App\Model\Reservation: XD\EventTickets\App\Model\Reservation
+  Broarm\EventTickets\App\Model\TaxModifier: XD\EventTickets\App\Model\TaxModifier
+  Broarm\EventTickets\App\Model\Ticket: XD\EventTickets\App\Model\Ticket
+  Broarm\EventTickets\App\Model\WaitingListRegistration: XD\EventTickets\App\Model\WaitingListRegistration

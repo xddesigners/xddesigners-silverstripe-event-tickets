@@ -1,0 +1,122 @@
+en:
+  XD\EventTickets\Model\Buyable:
+    TITLE_LABEL: 'Ticket title'
+    PRICE_LABEL: 'Ticket price'
+    SALE_START_LABEL: 'Ticket sale starts at'
+    SALE_START_DESCRIPTION: 'When no date is given the following date will be used {date}'
+    SALE_END_LABEL: 'Ticket sale ends at'
+    SALE_END_DESCRIPTION: 'When no date is given the start date of the event will be used: {date}'
+    AVAILABLE: 'Available'
+    UNAVAILABLE: 'Not for sale'
+    OrderMin: 'Minimum allowed amount of tickets from this type'
+    OrderMax: 'Maximum allowed amount of tickets from this type'
+  XD\EventTickets\Checkout\Steps\CheckoutSteps:
+    TICKETS_FOR: 'Tickets for {event}'
+    HAVE_FUN_AT: 'Have fun at {event}'
+    register: 'Register'
+    summary: 'Summary'
+    success: 'Success'
+  CheckIn:
+    GUESTLIST: 'Guest list'
+    CHECK_IN_TITLE: 'Check in guests for {event}'
+  XD\EventTickets\Forms\CheckInForm:
+    TICKET_CODE: 'Ticket number'
+    CheckIn: 'Check in'
+  XD\EventTickets\Forms\CheckInValidator:
+    MESSAGE_NO_CODE: 'Enter a ticket number'
+    MESSAGE_CODE_NOT_FOUND: 'The ticket number #{ticket} is not found.'
+    MESSAGE_TICKET_CANCELLED: '{ticket} is part of a cancelled reservation.'
+    MESSAGE_ALREADY_CHECKED_IN: '{ticket} is already checked in.'
+    MESSAGE_CHECK_OUT_SUCCESS: '{ticket} is successfully checked out.'
+    MESSAGE_CHECK_IN_SUCCESS: '{ticket} is successfully checked in.'
+  XD\EventTickets\Extensions\CurrencyExtension:
+    FREE: 'Free'
+  XD\EventTickets\Extensions\SiteConfigExtension:
+    SUCCESS_MESSAGE_HELP: 'This message is used on the success page. It can be overwritten on the event page.'
+    MAIL_MESSAGE_HELP: 'This message is shown on the ticket. It can be overwritten on the event page.'
+  XD\EventTickets\Forms\TicketForm:
+    MAKE_RESERVATION: 'Make a reservation'
+    WAITINGLIST_INTRO: 'The event is sold out. You can subscribe to the waiting list in order to get notified when tickets come available.'
+    WAITINGLIST_SUCCESS: 'Thank you for subscribing to our waiting list, you will hear from us when tickets come available.'
+    PENDING: 'Ticket sale starts from {date}.'
+  XD\EventTickets\Fields\TicketsField:
+    TICKETS: 'Tickets'
+    PRICE: 'Price'
+    AMOUNT: 'Amount'
+    EMPTY: 'Tickets'
+    VALIDATION_TO_MUCH: 'There are {ticketCount} tickets left'
+    VALIDATION_EMPTY: 'Select at least one ticket'
+  XD\EventTickets\Fields\PaymentGatewayField:
+    SelectGateway: Select payment method
+    NoGateway: No payment method available
+  XD\EventTickets\Extensions\TicketExtension:
+    Tickets: 'Tickets'
+    Capacity: 'Capacity'
+    Reservations: 'Reservations'
+    GuestList: 'Guest list'
+  XD\EventTickets\Extensions\TicketControllerExtension:
+    PERMISSIONS_CAT: 'Event tickets'
+    HANDLE_CHECK_IN: 'Authorised for scanning tickets'
+  TicketEmail:
+    TERMS_CONDITIONS: 'Terms and conditions'
+    Title: 'Your tickets'
+    Total: 'Total'
+    Agenda: 'Agenda'
+    Print: 'Print'
+    Share: 'Share'
+    Order: 'Order'
+    OrderNumber: 'Order number'
+    Name: 'Name'
+    Email: 'Email'
+    FOOTER: 'Questions? Email <a href="mailto:{email}">{email}</a> or call <a href="tel:{phone}">{phone}</a>'
+  AttendeeMail:
+    TITLE: 'Your ticket for {event}'
+    CONTENT: 'Hello {name}, Here is your ticket for <a href="{link}">{event}</a>.'
+  NotificationMail:
+    TITLE: 'New reservation for {event}'
+    CONTENT: 'A new reservation is made by {name} for {event}. Underneath you can find the details of the reservation.'
+    ORDER: 'Order <strong>#{code}</strong>'
+  ReservationMail:
+    TITLE: 'Your reservation at {sitename}'
+    CONTENT: 'Thank you for your reservation for <a href="{link}">{event}</a>. Your tickets are sent in a separate email.'
+  MainContactMail:
+    TITLE: 'Your tickets for {event}'
+    CONTENT: 'Here are your tickets for <a href="{link}">{event}</a>.'
+  XD\EventTickets\Model\Reservation:
+    CART: 'Cart'
+    PENDING: 'Pending'
+    PAID: 'Paid'
+    CANCELED: 'Cancelled'
+    RESEND: 'Send reservation'
+    AgreeToTermsAndConditions: 'Agreed to terms and conditions'
+  XD\EventTickets\Forms\ReservationForm:
+    PAYMENT: 'Continue to payment'
+    RESERVE: 'Reserve tickets'
+  XD\EventTickets\Model\Attendee:
+    GuestOf: 'Guest of {name}'
+    Ticket: 'Ticket'
+    Title: 'Name'
+    Email: 'Email'
+    Status_Active: 'Active'
+    Status_Cancelled: 'Cancelled'
+  XD\EventTickets\Fields\AttendeeField:
+    FirstName: 'First name'
+    Surname: 'Surname'
+    Email: 'Email'
+    TicketReceiver: 'Send ticket by email'
+    VALUED: '{title} valued {price}'
+  SuccessController:
+    DOWNLOAD_TICKETS: 'Download your tickets'
+    BACK: 'Go back'
+  XD\EventTickets\Forms\SummaryForm:
+    COMMENTS: 'Comments'
+  XD\EventTickets\Fields\SummaryField:
+    EMAIL_RECEIVER: 'Email receiver'
+    TICKET: 'Ticket'
+    PRICE: 'Price'
+    SUBTOTAL: 'Subtotal'
+    TOTAL: 'Total'
+    TICKET_RECEIVER_HELP: 'Send tickets to this person'
+  XD\EventTickets\Fields\TermsAndConditionsField:
+    TERMS_CONDITIONS: 'I agree to the terms and conditions stated on the <a href="{link}" target="new" title="Read the shop terms and conditions for this site">{title}</a> page'
+    AGREE_TO_TERMS: 'You must agree to the terms and conditions'

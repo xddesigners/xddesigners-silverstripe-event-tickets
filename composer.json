@@ -1,0 +1,42 @@
+{
+    "name": "xddesigners/silverstripe-event-tickets",
+    "description": "Event tickets for SilverStripe Event Calendar",
+    "type": "silverstripe-vendormodule",
+    "homepage": "https://github.com/TheBnl/event-tickets",
+    "keywords": [
+        "silverstripe",
+        "ticket",
+        "omnipay",
+        "event",
+        "calendar"
+    ],
+    "license": "BSD-3-Clause",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Remy Vaartjes",
+            "email": "remy@xd.nl"
+        }
+    ],
+    "require": {
+        "silverstripe/framework": "^4 || ^5",
+        "silverstripe/cms": "^4 || ^5",
+        "silverstripe/silverstripe-omnipay": "*",
+        "symbiote/silverstripe-gridfieldextensions": "*",
+        "lekoala/silverstripe-cms-actions": "*",
+        "omnipay/manual": "*",
+        "bacon/bacon-qr-code": "*",
+        "mpdf/mpdf": "*"
+    },
+    "extra": {
+        "expose": [
+            "client/dist"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "XD\\EventTickets\\": "src"
+        }
+    }
+}
