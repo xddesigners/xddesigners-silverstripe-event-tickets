@@ -20,8 +20,8 @@
         }
     ],
     "require": {
-        "silverstripe/framework": "^4 || ^5",
-        "silverstripe/cms": "^4 || ^5",
+        "silverstripe/framework": "^6",
+        "silverstripe/cms": "^6",
         "silverstripe/silverstripe-omnipay": "*",
         "symbiote/silverstripe-gridfieldextensions": "*",
         "lekoala/silverstripe-cms-actions": "*",
@@ -32,7 +32,10 @@
     "extra": {
         "expose": [
             "client/dist"
-        ]
+        ],
+        "branch-alias": {
+            "dev-main": "6.x-dev"
+        }
     },
     "autoload": {
         "psr-4": {
