@@ -17,12 +17,12 @@ use SilverStripe\ORM\FieldType\DBCurrency;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\Queries\SQLSelect;
 use SilverStripe\Reports\Report;
-use SilverStripe\View\ArrayData;
-use SilverStripe\View\ViewableData;
+use SilverStripe\Model\ArrayData;
+use SilverStripe\Model\ModelData;
 
 class TicketSalesReport extends Report
 {
-    protected $dataClass = ViewableData::class;
+    protected $dataClass = ModelData::class;
 
     public function title()
     {
