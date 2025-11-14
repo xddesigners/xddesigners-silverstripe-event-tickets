@@ -6,7 +6,7 @@ use XD\EventTickets\Model\Attendee;
 use XD\EventTickets\Model\Reservation;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FormField;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 

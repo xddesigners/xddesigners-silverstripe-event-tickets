@@ -5,7 +5,7 @@ namespace XD\EventTickets\Checkout\Steps;
 use SilverStripe\Control\RequestHandler;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Extensible;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\View\ArrayData;
 
 class CheckoutSteps

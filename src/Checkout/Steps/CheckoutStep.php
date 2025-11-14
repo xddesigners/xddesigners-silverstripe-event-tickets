@@ -7,7 +7,7 @@ use XD\EventTickets\Model\Reservation;
 use XD\EventTickets\Session\ReservationSession;
 use SilverStripe\Control\RequestHandler;
 use SilverStripe\Core\Extension;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 
 /**
  * Class CheckoutStep
