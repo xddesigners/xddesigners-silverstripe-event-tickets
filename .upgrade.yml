@@ -8,3 +8,7 @@ mappings:
   Broarm\EventTickets\App\Model\TaxModifier: XD\EventTickets\App\Model\TaxModifier
   Broarm\EventTickets\App\Model\Ticket: XD\EventTickets\App\Model\Ticket
   Broarm\EventTickets\App\Model\WaitingListRegistration: XD\EventTickets\App\Model\WaitingListRegistration
+  Broarm\EventTickets\Reports\TicketSalesReport: XD\EventTickets\Reports\TicketSalesReport
+  Broarm\EventTickets\Reports\ReservationsReport: XD\EventTickets\Reports\ReservationsReport
+  Broarm\EventTickets\Reports\GuestListReport: XD\EventTickets\Reports\GuestListReport
+  Broarm\EventTickets\Reports\CheckInReport: XD\EventTickets\Reports\CheckInReport
