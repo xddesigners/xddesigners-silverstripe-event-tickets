@@ -6,14 +6,18 @@ use XD\EventTickets\Forms\CheckInValidator;
 use XD\EventTickets\Model\CheckInValidatorResult;
 use XD\EventTickets\Model\Ticket;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\CheckboxSetField;
 use SilverStripe\Forms\DateField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Model\List\ArrayList;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\DataQuery;
+use SilverStripe\ORM\FieldType\DBDate;
 use SilverStripe\ORM\Queries\SQLSelect;
 use SilverStripe\Reports\Report;
-use SilverStripe\Model\ArrayData;
+use SilverStripe\View\ArrayData;
 
 class CheckInReport extends Report
 {
@@ -147,9 +151,11 @@ class CheckInReport extends Report
             $select = $select->setLimit($limit);
         }
 
+        /** @var \SilverStripe\ORM\Connect\MySQLStatement $query */
         $query = $select->execute();
+        $iterator = $query->getIterator();
         $list = new ArrayList();
-        while($item = $query->next()) {
+        while($item = $iterator->next()) {
             $list->add(new ArrayData($item));
         }
 

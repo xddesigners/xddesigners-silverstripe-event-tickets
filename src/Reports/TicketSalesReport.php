@@ -17,12 +17,12 @@ use SilverStripe\ORM\FieldType\DBCurrency;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\Queries\SQLSelect;
 use SilverStripe\Reports\Report;
-use SilverStripe\Model\ArrayData;
-use SilverStripe\Model\ModelData;
+use SilverStripe\View\ArrayData;
+use SilverStripe\View\ViewableData;
 
 class TicketSalesReport extends Report
 {
-    protected $dataClass = ModelData::class;
+    protected $dataClass = ViewableData::class;
 
     public function title()
     {
@@ -117,8 +117,10 @@ class TicketSalesReport extends Report
         }
 
         $list = new ArrayList();
+        /** @var \SilverStripe\ORM\Connect\MySQLStatement $query */
         $query = $select->execute();
-        while($item = $query->next()) {
+        $iterator = $query->getIterator();
+        while($item = $iterator->next()) {
             $list->add(new ArrayData($item));
         }
 
