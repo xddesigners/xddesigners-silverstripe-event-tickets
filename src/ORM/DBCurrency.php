@@ -21,7 +21,7 @@ class DBCurrency extends SSDBCurrency
      *
      * @return string
      */
-    public function Nice()
+    public function Nice(): string
     {
         $value = $this->getValue();
         $currencySymbol = DBCurrency::config()->get('currency_symbol');

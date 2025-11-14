@@ -2,13 +2,14 @@
 
 namespace XD\EventTickets\Fields;
 
+use SilverStripe\Core\Validation\ValidationResult;
 use XD\EventTickets\Model\Buyable;
 use XD\EventTickets\Model\Ticket;
 use Composer\Installers\PPIInstaller;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FormField;
-use SilverStripe\Forms\Validator;
-use SilverStripe\ORM\ArrayList;
+
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
@@ -98,7 +99,7 @@ class TicketsField extends FormField
      *
      * @return DBHTMLText|string
      */
-    public function Field($properties = array())
+    public function Field($properties = [])
     {
         $context = $this;
         $properties['Tickets'] = $this->getEditableTickets();
@@ -121,23 +122,18 @@ class TicketsField extends FormField
         return $result;
     }
 
-    /**
-     * Make sure a ticket is selected and that the selected amount is available
-     *
-     * @param Validator $validator
-     *
-     * @return bool
-     */
-    public function validate($validator)
+
+    public function validate(): ValidationResult
     {
+        $result = ValidationResult::create();
+
         // Throw an error when there are no tickets selected
         if (empty($this->value)) {
-            $validator->validationError($this->name, _t(
+            $result->addFieldError($this->name, _t(
                 'TicketsField.VALIDATION_EMPTY',
                 'Select at least one ticket'
             ), 'validation');
-
-            return false;
+            return $result;
         }
 
         // Get the availability
@@ -149,12 +145,12 @@ class TicketsField extends FormField
 
         // If the sum of tickets is 0 trow the same error as empty
         if ($ticketCount === 0) {
-            $validator->validationError($this->name, _t(
+            $result->addFieldError($this->name, _t(
                 'TicketsField.VALIDATION_EMPTY',
                 'Select at least one ticket'
             ), 'validation');
 
-            return false;
+            return $result;
         }
 
         // Check if the ticket is still available
@@ -166,19 +162,17 @@ class TicketsField extends FormField
             $amount = $amountArray['Amount'];
             $buyable = Buyable::get_by_id($id);
             if ($buyable->getAvailability() < $amount) {
-                $validator->validationError($this->name, _t(
+                $result->addFieldError($this->name, _t(
                     'TicketsField.VALIDATION_TO_MUCH',
                     'There are {ticketCount} tickets left',
                     null,
-                    array(
-                        'ticketCount' => $available
-                    )
+                    ['ticketCount' => $available]
                 ), 'validation');
 
-                return false;
+                return $result;
             }
         }
 
-        return false;
+        return $result;
     }
 }

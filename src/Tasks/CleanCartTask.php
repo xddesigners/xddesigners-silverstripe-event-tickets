@@ -2,6 +2,8 @@
 
 namespace XD\EventTickets\Tasks;
 
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Input\InputInterface;
 use XD\EventTickets\Model\Reservation;
 use Psr\Log\LoggerInterface;
 use SilverStripe\Control\Director;
@@ -16,18 +18,22 @@ use SilverStripe\Dev\BuildTask;
  */
 class CleanCartTask extends BuildTask
 {
-    protected $title = 'Cleanup cart task';
+    protected string $title = 'Cleanup cart task';
 
-    protected $description = 'Cleanup discarded ticket shop carts';
+    protected static string $description = 'Cleanup discarded ticket shop carts';
 
     private static $dependencies = [
         'Logger' => '%$' . LoggerInterface::class,
     ];
-    
-    /**
-     * @param HTTPRequest $request
-     */
-    public function run($request)
+
+    public function execute(InputInterface $input, PolyOutput $output): int
+    {
+        $this->run($input, $output);
+        return 0;
+    }
+
+
+    public function run(InputInterface $input, PolyOutput $output): int
     {
         if (!Director::is_cli()) echo '<pre>';
         $this->logger->debug("Start cleaning");
@@ -51,6 +57,8 @@ class CleanCartTask extends BuildTask
 
         $this->logger->debug("Done cleaning");
         if (!Director::is_cli()) echo '</pre>';
+
+        return 0;
     }
 
     public function setLogger(LoggerInterface $logger)

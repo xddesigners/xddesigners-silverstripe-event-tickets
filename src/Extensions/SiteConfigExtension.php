@@ -9,7 +9,7 @@ use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use SilverStripe\Forms\TreeDropdownField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\SiteConfig\SiteConfig;
 
 /**
@@ -25,27 +25,27 @@ use SilverStripe\SiteConfig\SiteConfig;
  * @method Image TicketLogo()
  * @method SiteTree TermsPage()
  */
-class SiteConfigExtension extends DataExtension
+class SiteConfigExtension extends Extension
 {
-    private static $db = array(
+    private static $db = [
         'SuccessMessage' => 'HTMLText',
         'SuccessMessageMail' => 'HTMLText',
         'PrintedTicketContent' => 'HTMLText'
-    );
+    ];
 
-    private static $has_one = array(
+    private static $has_one = [
         'TicketLogo' => Image::class,
         'TermsPage' => SiteTree::class
-    );
+    ];
 
     private static $owns = [
         'TicketLogo'
     ];
 
-    private static $defaults = array(
+    private static $defaults = [
         'SuccessMessage' => "<p>Thanks for your order!<br/>The requested tickets are sent to you by mail.</p>",
         'SuccessMessageMail' => "<p>This is your ticket.<br/>You can scan the QR code at the ticket check.</p>"
-    );
+    ];
 
     public function updateCMSFields(FieldList $fields)
     {

@@ -2,6 +2,8 @@
 
 namespace XD\EventTickets\Tasks;
 
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Input\InputInterface;
 use XD\EventTickets\Model\Attendee;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
@@ -16,23 +18,32 @@ use SilverStripe\View\SSViewer;
  */
 class PreviewTicketTask extends BuildTask
 {
-    protected $title = 'Preview Ticket email or pdf';
+    protected string $title = 'Preview Ticket email or pdf';
 
-    protected $description = 'Preview Ticket email or pdf';
+    protected static string $description = 'Preview Ticket email or pdf';
 
-    protected $previews = array(
+    protected $previews = [
         'PrintableTicket',
         'ReservationMail',
         'NotificationMail',
         'AttendeeMail',
         'MainContactMail'
-    );
+    ];
 
     /**
      * @param HTTPRequest $request
      */
-    public function run($request)
+    public function execute(InputInterface $input, PolyOutput $output): int{
+        $this->run($input, $output);
+        return 0;
+    }
+
+
+    public function run(InputInterface $input, PolyOutput $output): int
     {
+        // Get the current request
+        $request = HTTPRequest::createFromEnvironment();
+
         $preview = $request->remaining();
         $params = $request->allParams();
         $url = Director::absoluteURL("dev/{$params['Action']}/{$params['TaskName']}", true);
@@ -67,6 +78,7 @@ class PreviewTicketTask extends BuildTask
         }
         echo '</ul><hr>';
 
-        exit();
+        return 0;
+
     }
 }

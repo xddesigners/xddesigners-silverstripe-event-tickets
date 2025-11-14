@@ -29,8 +29,8 @@ use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\DataExtension;
-use SilverStripe\ORM\DataList;
+use SilverStripe\Core\Extension;
+use SilverStripe\Model\List\DataList;
 use SilverStripe\ORM\FieldType\DBDate;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\FieldType\DBField;
@@ -54,7 +54,7 @@ use SilverStripe\SiteConfig\SiteConfig;
  * @method HasManyList WaitingList()
  * @method ManyManyList Fields()
  */
-class TicketExtension extends DataExtension
+class TicketExtension extends Extension
 {
     protected $controller;
 

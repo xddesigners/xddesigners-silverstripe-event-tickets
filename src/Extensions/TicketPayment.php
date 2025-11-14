@@ -5,7 +5,7 @@ namespace XD\EventTickets\Extensions;
 use XD\EventTickets\Model\Reservation;
 use SilverStripe\Omnipay\Model\Payment;
 use SilverStripe\Omnipay\Service\ServiceResponse;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\ValidationException;
 
 /**
@@ -16,7 +16,7 @@ use SilverStripe\ORM\ValidationException;
  *
  * @property int ReservationID
  */
-class TicketPayment extends DataExtension
+class TicketPayment extends Extension
 {
     private static $has_one = array(
         'Reservation' => Reservation::class,

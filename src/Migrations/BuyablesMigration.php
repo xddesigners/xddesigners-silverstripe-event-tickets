@@ -14,9 +14,9 @@ class BuyablesMigration extends MigrationTask
 {
     private static $segment = 'buyables-migration';
     
-    protected $title = 'Migrate Ticket table to Buyable.';
+    protected string $title = 'Migrate Ticket table to Buyable.';
     
-    protected $description = 'Migrate Ticket table to Buyable and Capacity to MaxCapacity or vice-versa.';
+    protected static string $description = 'Migrate Ticket table to Buyable and Capacity to MaxCapacity or vice-versa.';
 
     public function up()
     {
