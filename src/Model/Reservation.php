@@ -476,7 +476,7 @@ class Reservation extends DataObject
     public function createTicketFile()
     {
         // Set the template and parse the data
-        $html = SSViewer::execute_template('XD\\EventTickets\\ReservationPrintable', $this);
+        $html = $this->renderWith('XD\\EventTickets\\ReservationPrintable');
         $pdf = new Mpdf();
         $pdf->WriteHTML($html);
         return $pdf;

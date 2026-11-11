@@ -587,7 +587,7 @@ class Attendee extends DataObject
     public function createTicketFile()
     {
         // Set the template and parse the data
-        $html = SSViewer::execute_template('XD\\EventTickets\\ReservationPrintable', new ArrayData([
+        $html = SSViewer::create('XD\\EventTickets\\ReservationPrintable')->process(new ArrayData([
             'TicketCode' => $this->TicketCode,
             'Attendees' => new ArrayList([$this])
         ]));
