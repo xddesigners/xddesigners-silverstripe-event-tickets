@@ -187,7 +187,6 @@ class TicketExtension extends Extension
     public function onAfterWrite()
     {
         $this->createDefaultFields();
-        parent::onAfterWrite();
     }
 
     /**

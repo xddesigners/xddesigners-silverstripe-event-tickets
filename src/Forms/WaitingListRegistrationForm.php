@@ -6,7 +6,7 @@ use XD\EventTickets\Model\WaitingListRegistration;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
-use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\Forms\TextField;
 
 class WaitingListRegistrationForm extends Form
@@ -23,7 +23,7 @@ class WaitingListRegistrationForm extends Form
             FormAction::create('doRegister', _t(__CLASS__ . '.Register', 'Register'))
         );
 
-        $required = new RequiredFields(array('Title', 'Email'));
+        $required = new RequiredFieldsValidator(array('Title', 'Email'));
 
         parent::__construct($controller, $name, $fields, $actions, $required);
         $this->extend('updateWaitingListRegistrationForm');

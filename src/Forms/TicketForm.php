@@ -13,7 +13,7 @@ use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\RequestHandler;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FormAction;
-use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\HasManyList;
 use SilverStripe\ORM\ValidationException;
@@ -45,7 +45,7 @@ class TicketForm extends FormStep
                 ->setDisabled($controller->getAvailability() === 0)
         );
 
-        $requiredFields = RequiredFields::create(['Tickets']);
+        $requiredFields = RequiredFieldsValidator::create(['Tickets']);
 
         parent::__construct($controller, $name, $fields, $actions, $requiredFields);
         $this->extend('updateForm');

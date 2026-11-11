@@ -10,9 +10,9 @@ use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
-use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\ValidationResult;
+use SilverStripe\Core\Validation\ValidationResult;
 
 class CheckInForm extends Form
 {
@@ -27,7 +27,7 @@ class CheckInForm extends Form
             FormAction::create('doCheckIn', _t(__CLASS__ . '.CheckIn', 'Check in'))
         );
 
-        $required = new RequiredFields(array('TicketCode'));
+        $required = new RequiredFieldsValidator(array('TicketCode'));
         parent::__construct($controller, $name, $fields, $actions, $required);
         $this->extend('onAfterConstruct');
 

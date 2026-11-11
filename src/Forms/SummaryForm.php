@@ -10,7 +10,7 @@ use XD\EventTickets\Model\Reservation;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FormAction;
-use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Omnipay\Exception\InvalidConfigurationException;
 use SilverStripe\Omnipay\Exception\InvalidStateException;
@@ -51,7 +51,7 @@ class SummaryForm extends FormStep
             $required[] = 'AgreeToTermsAndConditions';
         }
 
-        $validator = RequiredFields::create($required);
+        $validator = RequiredFieldsValidator::create($required);
 
         parent::__construct($controller, $name, $fields, $actions, $validator);
 

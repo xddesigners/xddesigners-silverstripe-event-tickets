@@ -5,7 +5,7 @@ namespace XD\EventTickets\Forms;
 use XD\EventTickets\Model\Attendee;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Extensible;
-use SilverStripe\ORM\ValidationResult;
+use SilverStripe\Core\Validation\ValidationResult;
 
 /**
  * CheckInValidator.php

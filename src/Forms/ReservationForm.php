@@ -9,7 +9,7 @@ use XD\EventTickets\Model\TaxModifier;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FormAction;
-use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\ORM\ValidationException;
 use SilverStripe\Security\Security;
 
@@ -54,7 +54,7 @@ class ReservationForm extends FormStep
             FormAction::create('goToNextStep', _t(__CLASS__ . '.ContinueToPayment', 'Continue to payment'))
         );
         
-        $required = new RequiredFields($requiredFields);
+        $required = new RequiredFieldsValidator($requiredFields);
         parent::__construct($controller, $name, $fields, $actions, $required);
         $this->extend('updateForm');
     }
