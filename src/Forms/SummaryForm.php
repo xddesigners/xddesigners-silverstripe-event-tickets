@@ -2,6 +2,7 @@
 
 namespace XD\EventTickets\Forms;
 
+use SilverStripe\Omnipay\GatewayInfo;
 use XD\EventTickets\Checkout\PaymentProcessor;
 use XD\EventTickets\Fields\PaymentGatewayField;
 use XD\EventTickets\Fields\SummaryField;
@@ -111,10 +112,24 @@ class SummaryForm extends FormStep
         // Hook trough where optional extra field data can be saved on the reservation
         $this->extend('updateReservationBeforePayment', $form->reservation, $data, $form);
 
-        // Check if there is a payment to process otherwise continue with manual processing
-        $gateway = $form->reservation->Total > 0
-            ? $data['Gateway']
-            : 'Manual';
+        // A paid or cancelled reservation can't be paid again (used to push PAID back to PENDING)
+        if (!in_array($form->reservation->Status, [Reservation::STATUS_CART, Reservation::STATUS_PENDING, Reservation::STATUS_PAYMENT_FAILED], true)) {
+            return $this->getController()->redirect($this->getController()->Link('success'));
+        }
+
+        // The gateway is decided on the server: a paid order must use a real (non-Manual) supported gateway; the
+        // posted value is only honoured when it is one of those. Free orders are completed manually.
+        $posted = isset($data['Gateway']) && is_string($data['Gateway']) ? $data['Gateway'] : '';
+        $paidGateways = array_values(array_diff(array_keys(GatewayInfo::getSupportedGateways(false)), ['Manual']));
+        if ($form->reservation->Total > 0) {
+            $gateway = in_array($posted, $paidGateways, true) ? $posted : ($paidGateways[0] ?? null);
+            if (!$gateway) {
+                $form->sessionMessage(_t(__CLASS__ . '.NoGateway', 'Betalen is op dit moment niet mogelijk.'), 'bad');
+                return $this->getController()->redirectBack();
+            }
+        } else {
+            $gateway = 'Manual';
+        }
 
         $form->reservation->changeState('PENDING');
         $form->reservation->Gateway = $gateway;

@@ -2,6 +2,7 @@
 
 namespace XD\EventTickets\Model;
 
+use SilverStripe\ORM\DB;
 use XD\EventTickets\Extensions\TicketExtension;
 use XD\EventTickets\Forms\GridField\GridFieldConfig_ReservationViewer;
 use Exception;
@@ -439,6 +440,17 @@ class Reservation extends DataObject
      */
     public function complete()
     {
+        // Claim the reservation atomically: the payment webhook and the customer's return can arrive at the same
+        // time; only one of them may send the tickets / run onAfterComplete.
+        $table = DataObject::getSchema()->tableName(self::class);
+        DB::prepared_query(
+            "UPDATE \"$table\" SET \"Status\" = ? WHERE \"ID\" = ? AND \"Status\" != ?",
+            [self::STATUS_PAID, $this->ID, self::STATUS_PAID]
+        );
+        if (DB::affected_rows() < 1) {
+            return;
+        }
+
         $this->changeState('PAID');
         $this->send();
         $this->write();

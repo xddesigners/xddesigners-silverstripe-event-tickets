@@ -19,8 +19,8 @@ class GuestListImportController extends Controller
     private static $url_segment = 'importguestlist';
 
     private static $allowed_actions = [
-        'index' => 'CMS_ACCESS',
-        'GuestListUploadForm' => 'CMS_ACCESS'
+        'index' => 'ADMIN',
+        'GuestListUploadForm' => 'ADMIN'
     ];
 
     protected $template = "BlankPage";
