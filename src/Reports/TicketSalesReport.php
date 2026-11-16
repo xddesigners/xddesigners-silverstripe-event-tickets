@@ -54,16 +54,17 @@ class TicketSalesReport extends Report
                 break;
         }
 
-        $gateway = "Mollie', 'Manual";
-        if (isset($params['Gateway'])) {
-            $gateway = $params['Gateway'];
+        // Parameterised (was interpolated into the SQL: injection via filters[Gateway])
+        $gateways = ['Mollie', 'Manual'];
+        if (!empty($params['Gateway'])) {
+            $gateways = array_values(array_filter((array) $params['Gateway'], 'is_string'));
         }
 
         $paymentTable = Payment::config()->get('table_name');
         $select = SQLSelect::create()
             ->setFrom($paymentTable)
             ->setSelect("$groupBy as Created, SUM(MoneyAmount) AS AmountSum")
-            ->addWhere("Gateway IN ('$gateway')")
+            ->addWhere(['"Gateway" IN (' . DB::placeholders($gateways) . ')' => $gateways])
             ->addWhere("Status IN ('Authorized', 'Captured')")
             ->addGroupBy("$groupBy")
             ->addOrderBy('Created DESC');

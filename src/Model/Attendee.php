@@ -469,11 +469,14 @@ class Attendee extends DataObject
 
     protected function generateTicketCode($time = null)
     {
-        $codeLength = self::config()->get('code_length');
-        // Hash classname and id, and optionally the time
-        $hash = md5(implode('_', array_filter([$this->ClassName, $this->ID, $time])));
-        $converted = base_convert($hash, 16, 10);
-        return substr($converted, 0, $codeLength);
+        // Cryptographically random numeric code. It used to be md5("<ClassName>_<ID>"), which made every
+        // ticket code computable from the (sequential) attendee ID.
+        $codeLength = max(8, (int) self::config()->get('code_length'));
+        $code = (string) random_int(1, 9);
+        while (strlen($code) < $codeLength) {
+            $code .= (string) random_int(0, 9);
+        }
+        return $code;
     }
 
 

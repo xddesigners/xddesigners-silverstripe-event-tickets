@@ -26,6 +26,12 @@ use SilverStripe\SiteConfig\SiteConfig;
  */
 class SummaryForm extends FormStep
 {
+    /**
+     * Attendee fields that may be changed via Summary[<attendeeID>][<field>] on the summary step.
+     * @config
+     */
+    private static $summary_editable_fields = [];
+
     public $summaryStep;
 
     public function __construct($controller, $name, Reservation $reservation)
@@ -80,9 +86,17 @@ class SummaryForm extends FormStep
         // If the summary is changed and email receivers are set
         if (isset($data['Summary']) && is_array($data['Summary'])) {
             foreach ($data['Summary'] as $attendeeID => $fields) {
-                $attendee = $form->reservation->Attendees()->find('ID', $attendeeID);
+                $attendee = $form->reservation->Attendees()->byID((int) $attendeeID);
+                if (!$attendee || !is_array($fields)) {
+                    continue;
+                }
+                // Only explicitly allowed fields may be edited on the summary step (default: none). Arbitrary
+                // setField() allowed changing MemberID, TicketStatus, CheckedIn etc.
+                $editable = (array) self::config()->get('summary_editable_fields');
                 foreach ($fields as $field => $value) {
-                    $attendee->setField($field, $value);
+                    if (is_string($field) && in_array($field, $editable, true) && is_scalar($value)) {
+                        $attendee->setField($field, $value);
+                    }
                 }
                 $attendee->write();
             }

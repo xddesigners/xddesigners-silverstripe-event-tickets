@@ -28,7 +28,7 @@ class ReservationForm extends FormStep
      */
     private static $require_all_attendees = false;
 
-    public function __construct($controller, $name, Reservation $reservation = null)
+    public function __construct($controller, $name, ?Reservation $reservation = null)
     {
         $requiredFields = array();
         $fields = FieldList::create();
@@ -73,8 +73,13 @@ class ReservationForm extends FormStep
         
         if (isset($data['Attendee'])) {
             foreach ($data['Attendee'] as $attendeeID => $attendeeData) {
+                // Only attendees of this reservation (was Attendee::get()->byID(): IDOR on any attendee)
                 /** @var Attendee $attendee */
-                $attendee = Attendee::get()->byID($attendeeID);
+                $attendee = $reservation->Attendees()->byID((int) $attendeeID);
+                if (!$attendee || !is_array($attendeeData)) {
+                    continue;
+                }
+                $allowedFieldIDs = $attendee->TicketPage()->Fields()->column('ID');
 
                 // populate the attendees
                 foreach ($attendeeData as $field => $value) {
@@ -90,10 +95,10 @@ class ReservationForm extends FormStep
                         }
                     }
 
-                    if (is_int($field)) {
-                        $attendee->Fields()->add($field, array('Value' => $value));
-                    } else {
-                        $attendee->{$field} = $value;
+                    // Only the event's user fields are saved. Never assign posted keys as model properties
+                    // (that allowed setting MemberID, ReservationID, TicketPageID, TicketStatus, CheckedIn, ...).
+                    if (is_int($field) && in_array($field, $allowedFieldIDs)) {
+                        $attendee->Fields()->add($field, array('Value' => is_scalar($value) ? $value : null));
                     }
                 }
 
@@ -101,7 +106,7 @@ class ReservationForm extends FormStep
 
                 // Set the main contact
                 if (isset($attendeeData['Main']) && (bool)$attendeeData['Main']) {
-                    $reservation->setMainContact($attendeeID);
+                    $reservation->setMainContact($attendee->ID);
                     if ($member = Security::getCurrentUser()) {
                         $attendee->MemberID = $member->ID;
                         $attendee->write();
