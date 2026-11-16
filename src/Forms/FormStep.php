@@ -7,7 +7,7 @@ use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\RequestHandler;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\Form;
-use SilverStripe\Forms\Validator;
+use SilverStripe\Forms\Validation\Validator;
 
 /**
  * Class FormStep
@@ -27,11 +27,11 @@ abstract class FormStep extends Form
     protected $nextStep;
 
     public function __construct(
-        RequestHandler $controller = null,
+        ?RequestHandler $controller = null,
         $name = self::DEFAULT_NAME,
-        FieldList $fields = null,
-        FieldList $actions = null,
-        Validator $validator = null
+        ?FieldList $fields = null,
+        ?FieldList $actions = null,
+        ?Validator $validator = null
     )
     {
         parent::__construct($controller, $name, $fields, $actions, $validator);
