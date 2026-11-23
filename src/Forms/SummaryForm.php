@@ -15,10 +15,10 @@ use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Omnipay\Exception\InvalidConfigurationException;
 use SilverStripe\Omnipay\Exception\InvalidStateException;
-use SilverStripe\Omnipay\Model\Message\GatewayErrorMessage;
 use SilverStripe\Omnipay\Model\Payment;
-use SilverStripe\ORM\ValidationException;
+use SilverStripe\Core\Validation\ValidationException;
 use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\ORM\DataObject;
 
 /**
  * Class SummaryForm
@@ -158,16 +158,16 @@ class SummaryForm extends FormStep
     public function getPaymentErrorMessage()
     {
         /** @var Payment $lastPayment */
-        // Get the last payment
-        if (!$lastPayment = $this->reservation->Payments()->first()) {
+        // Get the most recent payment
+        if (!$lastPayment = $this->reservation->Payments()->sort('ID', 'DESC')->first()) {
             return false;
         }
 
         // Find the gateway error
         $lastErrorMessage = null;
-        $errorMessages = $lastPayment->Messages()->exclude('Message', '')->sort('Created', 'DESC');
+        $errorMessages = $lastPayment->Messages()->exclude('Message', '')->sort('ID', 'DESC');
         foreach ($errorMessages as $errorMessage) {
-            if ($errorMessage instanceof GatewayErrorMessage) {
+            if ($this->isPaymentErrorMessage($errorMessage)) {
                 $lastErrorMessage = $errorMessage;
                 break;
             }
@@ -179,6 +179,21 @@ class SummaryForm extends FormStep
         }
 
         return _t("{$lastErrorMessage->Gateway}.{$lastErrorMessage->Code}", $lastErrorMessage->Message);
+    }
+
+    /**
+     * Whether a payment message reports an error. silverstripe-omnipay 6.1+ stores every message as one
+     * PaymentMessage class with its kind in `Type` (e.g. `PurchaseError`, `CompletePurchaseError`); older versions
+     * used a subclass per kind, with GatewayErrorMessage for errors.
+     */
+    protected function isPaymentErrorMessage(DataObject $message): bool
+    {
+        $type = (string) $message->getField('Type');
+        if ($type !== '') {
+            return str_ends_with($type, 'Error');
+        }
+
+        return is_a($message, 'SilverStripe\\Omnipay\\Model\\Message\\GatewayErrorMessage');
     }
 
     public function setSummaryStep($step)
